@@ -1,0 +1,12 @@
+*.o
+*.vcd
+*.log
+*.DS_Store
+
+/.vscode
+/.dvt
+libs/ac_types
+c++-model/QuadraTb
+rtl-model/proj
+verilator/obj_dir
+verilator/verilator

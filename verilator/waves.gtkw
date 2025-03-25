@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Mon Mar 24 00:07:44 2025
+[*]
+[dumpfile] "/home/blaszar/Desktop/coding-ex2/verilator/dump.vcd"
+[dumpfile_mtime] "Sun Mar 23 23:48:32 2025"
+[dumpfile_size] 12138
+[savefile] "/home/blaszar/Desktop/coding-ex2/verilator/waves.gtkw"
+[timestart] 7110
+[size] 1465 600
+[pos] 115 81
+*-11.912371 16300 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.quadra_top.
+[sst_width] 278
+[signals_width] 248
+[sst_expanded] 1
+[sst_vpaned_height] 152
+@28
+top.quadra_top.u0.clk
+top.quadra_top.u0.rst_b
+@22
+top.quadra_top.u0.x[23:0]
+@28
+top.quadra_top.u0.dv_p0
+top.quadra_top.u0.dv_p1
+@29
+top.quadra_top.u0.dv_p2
+@22
+top.quadra_top.u0.a[18:0]
+top.quadra_top.u0.b[14:0]
+top.quadra_top.u0.c[9:0]
+top.quadra_top.u0.x1[6:0]
+top.quadra_top.u0.x2[16:0]
+[pattern_trace] 1
+[pattern_trace] 0
