@@ -16,7 +16,7 @@ module quadra
     localparam int A_T0_OFFSET = T0_W - A_W;
 
     // x1_t x1, x1_d;
-    x2_t x2, x2_d;
+    x2_t x2;
     a_t a;
     b_t b;
     c_t c;
@@ -72,9 +72,7 @@ module quadra
 
     always_ff @(posedge clk) begin
         if (!rst_b) begin
-            // x1 <= '0;
             x2 <= '0;
-            x2_d <= '0;
             a <= '0;
             b <= '0;
             c <= '0;
@@ -86,21 +84,17 @@ module quadra
         end
         else begin
             // First pipeline stage
-            // x1 <= x[23:17];
             x2 <= x[16:0];
             a <= w_a;
             b <= w_b;
             c <= w_c;
             sq <=w_sq;
 
-            x2_d <= x2;
-
             // Second pipeline stage
             t0 <= $signed({a, {A_T0_OFFSET{1'b0}}});
             t1 <= w_t1;
             t2 <= w_t2;
 
-            // Third pipeline stage
             s <= w_s;
         end
 
