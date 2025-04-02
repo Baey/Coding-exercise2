@@ -2,7 +2,7 @@
 // Quadratic polynomial:  f(x) = a + b*x2 + c*(x2^2)
 //
 
-`include "quadra.vh"
+`include "quadra_types.vs"
 
 module quadra
 (
@@ -99,7 +99,7 @@ module quadra
         end
 
     end
-    //RES_W-RES_I-1:RES_W-RES_I-1-RES_F
-    assign y = {s[S_W-1:S_W-Y_I], s[S_W-S_I-1:S_W-S_I-Y_F]};
+
+    assign y = {s[S_F+:Y_I], s[S_F-1-:Y_F]};
 
 endmodule

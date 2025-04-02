@@ -1,4 +1,4 @@
-`include "quadra.vh"
+`include "quadra_types.vs"
 
 module quadra_top
 (

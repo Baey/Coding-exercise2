@@ -1,7 +1,7 @@
 // quadra.vh
 
-`ifndef QUADRA_VH
-`define QUADRA_VH
+`ifndef QUADRA_TYPES_VS
+`define QUADRA_TYPES_VS
 
 typedef logic ck_t; // clock
 typedef logic rs_t; // reset

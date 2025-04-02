@@ -181,7 +181,7 @@ inline void checkOutput
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_ref_dbl << "   "
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_cpp_dbl << "  ["
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_cpp_err << "]  "
-             << ((rtl_err_ok) ? " ==" : " !=")
+             << ((match_ok) ? " ==" : " !=")
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_rtl_dbl << "  ["
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_rtl_err << "]  "
              << endl;
@@ -203,7 +203,7 @@ void testQuadra
     uint32_t x_start = 0x000000; // 0.0
     // uint32_t x_start = 0xfffff0;
     // uint32_t x_start = 0xffffff;
-    // uint32_t x_stop  = x_start + 0x000f00*5;
+    // uint32_t x_stop  = x_start + 0x000001;
     uint32_t x_stop  = 0xffffff; // 1.999...
     // uint32_t x_step  = 0x000001; // exhaustive test
     uint32_t x_step  = 0x000101; // sparse test
@@ -217,6 +217,10 @@ void testQuadra
         x_int_t x_int = x;
         x_fxd_t x_fxd = 0; // (u1.23)
         x_fxd.set_slc(0, x_int);
+        cout << " -- " << endl;
+        cout << "x_fxd = " << dec << fixed << setw(8) << setprecision(6) << setfill(' ') << right
+             << x_fxd.to_double() << endl;
+        cout << "" << endl;
 
         lat_fifo.push_back(x_fxd); // write x value to queue
 
