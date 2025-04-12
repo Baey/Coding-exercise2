@@ -55,5 +55,5 @@ grid on
 fprintf("% %3s  %16s  %16s  %16s\n\n", "k", "a", "b", "c");
 for k = 0 : N-1
     i = k+1;
-    fprintf('%3d  %+16.12f  %+16.12f  %+16.12f\n', k, a(i), b(i), c(i));
+    fprintf("%3d  %32.28f  %32.28f  %32.28f\n", k, a(i), b(i), c(i));
 end

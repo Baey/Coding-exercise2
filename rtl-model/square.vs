@@ -17,4 +17,4 @@ module square
         sq = temp[RES_W-1 -: SQ_W];
     end
 
-endmodule    
+endmodule
