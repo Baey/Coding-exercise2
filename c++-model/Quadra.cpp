@@ -153,13 +153,12 @@ y_fxd_t approxFixed(const x_fxd_t &x_fxd)
      const int PREC = 28;
      const int WIDTH = PREC + 3;
 
-     cout << " -- " << endl;
-
      if constexpr (DBG_OUT)
      {
           cout << "x_fxd  = "
                << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << x_fxd.to_double() << endl;
+          cout << "x_bin  = " << x_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // Break up into LUT index and delta:
@@ -187,36 +186,26 @@ y_fxd_t approxFixed(const x_fxd_t &x_fxd)
           cout << "x1_fxd = "
                << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << x1_fxd.to_double() << endl;
-          cout << "x1_fxd (b) = "
-               << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << x1_fxd.to_string(AC_BIN, false) << endl;
+          cout << "x1_bin = " << x1_fxd.to_string(AC_BIN, false) << endl;
           cout << "x2_fxd = "
                << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << x2_fxd.to_double() << endl;
-          cout << "x2_fxd (b) = "
+          cout << "x2_bin = "
                << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
                << x2_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // Square:
-     sq_int_t sq_int = x2_int * x2_int; // x2 * x2
+     sq_fxd_t sq_fxd = x2_fxd * x2_fxd; // x2 * x2
 
      if constexpr (DBG_OUT)
      {
           cout << "sq_int =  0x"
                << hex << fixed << setw(6) << setfill('0') << right
-               << sq_int.to_int() << endl;
-     }
-
-     sq_fxd_t sq_fxd = x2_fxd * x2_fxd; // x2 * x2
-
-     if constexpr (DBG_OUT)
-     {
+               << sq_fxd.to_int() << endl;
           cout << "sq_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << right
                << sq_fxd.to_double() << endl;
-          cout << "sq_fxd (b) = "
-               << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << sq_fxd.to_string(AC_BIN, false) << endl;
+          cout << "sq_bin = " << sq_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // Table index:
@@ -241,78 +230,62 @@ y_fxd_t approxFixed(const x_fxd_t &x_fxd)
 
      if constexpr (DBG_OUT)
      {
-          cout << "a_dbl  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
-               << a_dbl << endl;
-          cout << "a_fxd  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
+          cout << "a_int =  0x" << hex << fixed << setw(6) << setfill('0') << right << a_fxd.to_int() << endl;
+          cout << "a_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << a_fxd.to_double() << endl;
-          cout << "a_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << a_fxd.to_string(AC_BIN, false) << endl;
-          cout << "b_dbl  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
-               << b_dbl << endl;
-          cout << "b_fxd  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
+          cout << "a_bin = " << a_fxd.to_string(AC_BIN, true) << endl;
+          cout << "b_int =  0x" << hex << fixed << setw(6) << setfill('0') << right << b_fxd.to_int() << endl;
+          cout << "b_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << b_fxd.to_double() << endl;
-          cout << "b_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << b_fxd.to_string(AC_BIN, false) << endl;
-          cout << "c_dbl  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
-               << c_dbl << endl;
-          cout << "c_fxd  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
+          cout << "b_bin = " << b_fxd.to_string(AC_BIN, false) << endl;
+          cout << "c_int =  0x" << hex << fixed << setw(6) << setfill('0') << right << c_fxd.to_int() << endl;
+          cout << "c_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << c_fxd.to_double() << endl;
-          cout << "c_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << c_fxd.to_string(AC_BIN, false) << endl;
+          cout << "c_bin = " << c_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // Calculate quadratic polynomial:
      t0_fxd_t t0_fxd = a_fxd; //  a
-     t0_int_t t0_int = a_fxd.slc<T0_W>(0);
      t1_fxd_t t1_fxd = b_fxd * x2_fxd; //  b * x2
-     t1_int_t t1_int = b_fxd.slc<T1_W>(0);
-     t2_fxd_t t2_fxd = c_fxd * sq_fxd; //  c * x2^2
-     t2_int_t t2_int = c_fxd.slc<T2_W>(0);
+     t2_fxd_t t2_fxd = c_fxd * sq_fxd; //  c
 
      if constexpr (DBG_OUT)
      {
           cout << "t0_int =  0x"
                << hex << fixed << setw(7) << setfill('0') << right
-               << t0_int.to_int() << endl;
+               << t0_fxd.to_int() << endl;
           cout << "t0_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << right
                << t0_fxd.to_double() << endl;
-          cout << "t0_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << t0_fxd.to_string(AC_BIN, false) << endl;
+          cout << "t0_bin = " << t0_fxd.to_string(AC_BIN, false) << endl;
           cout << "t1_int =  0x"
                << hex << fixed << setw(8) << setfill('0') << right
-               << t1_int.to_int() << endl;
+               << t1_fxd.to_int() << endl;
           cout << "t1_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << right
                << t1_fxd.to_double() << endl;
-          cout << "t1_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << t1_fxd.to_string(AC_BIN, false) << endl;
+          cout << "t1_bin = " << t1_fxd.to_string(AC_BIN, false) << endl;
           cout << "t2_int =  0x"
                << hex << fixed << setw(8) << setfill('0') << right
-               << t2_int.to_int() << endl;
+               << t2_fxd.to_int() << endl;
           cout << "t2_fxd = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << right
                << t2_fxd.to_double() << endl;
-          cout << "t2_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << t2_fxd.to_string(AC_BIN, false) << endl;
+          cout << "t2_bin = " << t2_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // 3-way addition:
      s_fxd_t s_fxd = t0_fxd + t1_fxd + t2_fxd;
-     s_int_t s_int = t0_int + t1_int + t2_int;
 
      if constexpr (DBG_OUT)
      {
           cout << "s_int  =  0x"
                << hex << fixed << setw(8) << setfill('0') << right
-               << s_int.to_int() << endl;
+               << s_fxd.to_int() << endl;
           cout << "s_fxd  = " << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << s_fxd.to_double() << endl;
-          cout << "s_fxd (b) = " << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << s_fxd.to_string(AC_BIN, false) << endl;
+          cout << "s_bin = " << s_fxd.to_string(AC_BIN, false) << endl;
      }
 
      // Round:
      y_rnd_t y_rnd = s_fxd;
-
-     y_int_t y_int = y_rnd.to_int();
 
      // Output:
      y_fxd_t y_fxd = y_rnd;
@@ -321,13 +294,11 @@ y_fxd_t approxFixed(const x_fxd_t &x_fxd)
      {
           cout << "y_int =  0x"
                << hex << fixed << setw(7) << setfill('0') << right
-               << y_int.to_int() << endl;
+               << y_fxd.to_int() << endl;
           cout << "y_fxd  = "
                << dec << fixed << setw(WIDTH) << setprecision(PREC) << setfill(' ') << right
                << y_fxd.to_double() << endl;
-          cout << "y_fxd (b) = "
-               << dec << fixed << setw(5) << setprecision(PREC) << setfill(' ') << right
-               << y_fxd.to_string(AC_BIN, false) << endl;
+          cout << "y_bin = " << y_fxd.to_string(AC_BIN, false) << endl;
      }
 
      return y_fxd;

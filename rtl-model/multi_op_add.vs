@@ -2,25 +2,28 @@
 
 module multi_op_add
 (
-    input  t0_t t0,
-    input t1_t t1,
-    input t2_t t2,
-
-    output s_t s
+    input  t0_t t0, // S1.27
+    input t1_t t1, // S3.27
+    input t2_t t2, // S3.27
+    output s_t s // S2.27
 );
-    // t0: S1.27
-    // t1: S3.27
-    // t2: S3.27
     // res: S5.27
-    // s: S2.27
-    logic signed [31:0] temp;
+    localparam int RES_I = T1_I + 1;
+    localparam int RES_F = T1_F;
+    localparam int RES_W = RES_I + RES_F;
+    localparam int ROUND_SHIFT = S_F - Y_F;
+
+    logic signed [RES_W-1:0] temp, t0_ext, t1_ext, t2_ext;
 
     // Compute t0 + t1 + t2
     always_comb begin
-        temp = $signed({{2{t0[T0_W-1]}}, t0}) + t1 + t2;
-        // temp2 = temp1 >>> 3;
-        // s = temp2[28:0];
-        s = {temp[27+:S_I], temp[26-:S_F]};
+        // Extend ti to mat
+        t0_ext = $signed(t0);
+        t1_ext = $signed(t1);
+        t2_ext = $signed(t2);
+
+        temp = t0_ext + t1_ext + t2_ext;
+        s = temp[RES_W-3 -: S_W];
     end
 
 endmodule    

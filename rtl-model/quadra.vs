@@ -14,9 +14,12 @@ module quadra
 );
 
     localparam int A_T0_OFFSET = T0_W - A_W;
+    localparam int ROUND_SHIFT = S_F - Y_F;
+
+    logic round_bit, sticky_bit, guard_bit, round_up;
 
     // x1_t x1, x1_d;
-    x2_t x2;
+    x2_t x2; // x2_d;
     a_t a;
     b_t b;
     c_t c;
@@ -44,7 +47,7 @@ module quadra
 
     // x2^2
     square square0 (
-        .x2 (x[16:0]),
+        .x2 ({{6{1'b0}}, x[16:0]}),
         .sq (w_sq)
     );
 
@@ -88,18 +91,30 @@ module quadra
             a <= w_a;
             b <= w_b;
             c <= w_c;
-            sq <=w_sq;
+            sq <= w_sq;
+
+            // x2_d <= x2;
 
             // Second pipeline stage
-            t0 <= $signed({a, {A_T0_OFFSET{1'b0}}});
+            t0 <= {a, {A_T0_OFFSET{1'b0}}};
             t1 <= w_t1;
             t2 <= w_t2;
 
+            // Third pipeline stage
             s <= w_s;
         end
 
     end
 
-    assign y = {s[S_F+:Y_I], s[S_F-1-:Y_F]};
+    // Rounding bit
+    always_comb begin
+        guard_bit  = s[ROUND_SHIFT-1];
+        round_bit  = s[ROUND_SHIFT-2];
+        sticky_bit = |s[ROUND_SHIFT-3:0];
+        round_up = guard_bit && (round_bit || sticky_bit || s[ROUND_SHIFT]);
+    end
+
+    // Apply rounding and assign output
+    assign y = s[S_W-1 -: Y_W] + round_up; 
 
 endmodule

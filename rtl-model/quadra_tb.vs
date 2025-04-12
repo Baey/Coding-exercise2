@@ -75,7 +75,7 @@ module quadra_tb
         // flush pipeline:
         repeat (10) @(posedge clk); 
 
-        x    = 24'hffffff;
+        x    = 24'b111111111111111100000000;
         x_dv = 1'b1;
 
         $display("x = 0x%08h", x);

@@ -49,7 +49,7 @@ typedef logic unsigned [X1_W-1:0] x1_t;
 // x2: x[16:0] -> u0.17
 localparam int X2_I =  0;          // integer part
 localparam int X2_J = X2_I - X1_F; // (this is key for proper alignment)
-localparam int X2_F =  X_W - X1_W; // fractional part
+localparam int X2_F =  X_W - X1_W - X2_J; // fractional part
 localparam int X2_W = X2_I + X2_F; // bit width
 
 typedef logic unsigned [X2_W-1:0] x2_t;
@@ -70,7 +70,7 @@ typedef logic signed [B_W-1:0] b_t;
 
 // c:
 localparam int C_I =  3;
-localparam int C_F = 12;
+localparam int C_F = 7;
 localparam int C_W = C_I + C_F;
 
 typedef logic signed [C_W-1:0] c_t;

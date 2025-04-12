@@ -175,7 +175,9 @@ inline void checkOutput
     const int SP_WIDTH = SP_PREC + 8;
 
     if (echo_en)
-    {
+    {   
+        cout << "  ";
+        cout << "x_bin  = " << x_fxd.to_string(AC_BIN, false) << endl;
         cout << "  ";
         cout << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << x_dbl     << "   "
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_ref_dbl << "   "
@@ -200,13 +202,12 @@ void testQuadra
     using namespace std;
 
     // Test params:
-    uint32_t x_start = 0x000000; // 0.0
-    // uint32_t x_start = 0xfffff0;
+    uint32_t x_start = 0x000000;
     // uint32_t x_start = 0xffffff;
     // uint32_t x_stop  = x_start + 0x000001;
     uint32_t x_stop  = 0xffffff; // 1.999...
     // uint32_t x_step  = 0x000001; // exhaustive test
-    uint32_t x_step  = 0x000101; // sparse test
+    uint32_t x_step  = 0x000001; // sparse test
 
     lat_fifo.push_back(0.0);
     lat_fifo.push_back(0.0);
@@ -217,10 +218,6 @@ void testQuadra
         x_int_t x_int = x;
         x_fxd_t x_fxd = 0; // (u1.23)
         x_fxd.set_slc(0, x_int);
-        cout << " -- " << endl;
-        cout << "x_fxd = " << dec << fixed << setw(8) << setprecision(6) << setfill(' ') << right
-             << x_fxd.to_double() << endl;
-        cout << "" << endl;
 
         lat_fifo.push_back(x_fxd); // write x value to queue
 
@@ -232,8 +229,8 @@ void testQuadra
         checkOutput(top, lat_fifo);
     }
 
-    // Idle for 5 cycles to allow for pipeline to empty out:
-    for (uint32_t i = 0; i < 5; i++)
+    // Idle for 6 cycles to allow for pipeline to empty out:
+    for (uint32_t i = 0; i < 6; i++)
     {
         top->x    = 0.0;
         top->x_dv = 0;
