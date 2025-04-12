@@ -176,9 +176,6 @@ inline void checkOutput
 
     if (echo_en)
     {   
-        cout << "  ";
-        cout << "x_bin  = " << x_fxd.to_string(AC_BIN, false) << endl;
-        cout << "  ";
         cout << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << x_dbl     << "   "
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_ref_dbl << "   "
              << dec << scientific << setw(SP_WIDTH) << setprecision(SP_PREC) << right << y_cpp_dbl << "  ["
